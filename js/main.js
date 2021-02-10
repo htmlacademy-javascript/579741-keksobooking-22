@@ -1,4 +1,27 @@
-//Ссылка на источник https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+const TYPES = ['palace', 'flat', 'house', 'bungalow'];
+const TIMES = ['12:00', '13:00', '14:00'];
+const TITLES = ['Отель1', 'Отель2', 'Отель3', 'Отель4'];
+const DESCRIPTIONS = ['Уютная комната', 'Лучший вариант на Ваши даты', 'Выгодное предложение', 'Отличное расположение'];
+
+const ALL_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const ALL_PHOTOS = [
+  'http: //o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http: //o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http: //o0.github.io/assets/images/tokyo/hotel3.jpg',
+];
+const MIN_X_COORDINATE = 35.65000;
+const MAX_X_COORDINATE = 35.70000;
+const MIN_Y_COORDINATE = 139.70000;
+const MAX_Y_COORDINATE = 139.80000;
+const DIGITS_COORDINATE = 5;
+const ADS_COUNT = 10;
+const MIN_PRICE = 1;
+const MAX_PRICE = 1000000;
+const MIN_ROOMS = 1;
+const MAX_ROOMS = 100;
+const MIN_GUESTS = 1;
+const MAX_GUESTS = 100;
+
 const getRandomNumber = (min, max) => {
   if (max <= min || max <= 0 || min < 0) {
     throw new Error('Вcе числа должны быть положительными');
@@ -13,7 +36,6 @@ const getRandomNumber = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-getRandomNumber(5, 10);
 
 const getRandomFloatNumber = (min, max, digits) => {
   if (max <= min || max <= 0 || min <= 0 || digits <= 0) {
@@ -28,51 +50,41 @@ const getRandomFloatNumber = (min, max, digits) => {
 
   return +((Math.random() * (max - min) + min).toFixed(digits));
 }
-getRandomFloatNumber(1.2, 1.25, 5);
 
-const types = ['palace', 'flat', 'house', 'bungalow'];
-const times = ['12:00', '13:00', '14:00'];
-const titles = ['Отель1', 'Отель2', 'Отель3', 'Отель4'];
-const descriptions = ['Уютная комната', 'Лучший вариант на Ваши даты', 'Выгодное предложение', 'Отличное расположение'];
+const getRandomArrayElement = (array) => {
+  return array[getRandomNumber(0, array.length - 1)];
+}
 
-let allFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-let allPhotos = [
-  'http: //o0.github.io/assets/images/tokyo/hotel1.jpg',
-  'http: //o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http: //o0.github.io/assets/images/tokyo/hotel3.jpg',
-];
+const createRandomArrayFromArray = (array) => {
+  const result = [];
+  for (let i = 0; i < getRandomNumber(1, array.length); i++) {
+    result.push(array[i]);
+  }
+  return result;
+}
 
 const createSimilarAd = () => {
 
-  let features = [];
-
-  for (let i = 0; i < getRandomNumber(1, 6); i++) {
-    features.push(allFeatures[i]);
-  }
-
-  let photos = [];
-  for (let i = 0; i < getRandomNumber(1, 3); i++) {
-    photos.push(allPhotos[i]);
-  }
-
-  const xCoord = getRandomFloatNumber(35.65000, 35.70000, 5);
-  const yCoord = getRandomFloatNumber(139.70000, 139.80000, 5);
+  const features = createRandomArrayFromArray(ALL_FEATURES);
+  const photos = createRandomArrayFromArray(ALL_PHOTOS);
+  const xCoord = getRandomFloatNumber(MIN_X_COORDINATE, MAX_X_COORDINATE, DIGITS_COORDINATE);
+  const yCoord = getRandomFloatNumber(MIN_Y_COORDINATE, MAX_Y_COORDINATE, DIGITS_COORDINATE);
 
   return {
     author: {
       avatar: 'img/avatars/user0' + getRandomNumber(1, 8) + '.png',
     },
     offer: {
-      title: titles[getRandomNumber(0, titles.length - 1)],
+      title: getRandomArrayElement(TITLES),
       address: xCoord + ',' + yCoord,
-      price: getRandomNumber(1, 1000000),
-      type: types[getRandomNumber(0, types.length - 1)],
-      rooms: getRandomNumber(1, 5),
-      guests: getRandomNumber(1, 60),
-      checkin: times[getRandomNumber(0, times.length - 1)],
-      checkout: times[getRandomNumber(0, times.length - 1)],
+      price: getRandomNumber(MIN_PRICE, MAX_PRICE),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomNumber(MIN_ROOMS, MAX_ROOMS),
+      guests: getRandomNumber(MIN_GUESTS, MAX_GUESTS),
+      checkin: getRandomArrayElement(TIMES),
+      checkout: getRandomArrayElement(TIMES),
       features: features,
-      description: descriptions[getRandomNumber(0, descriptions.length - 1)],
+      description: getRandomArrayElement(DESCRIPTIONS),
       photos: photos,
       location: {
         x: xCoord,
@@ -82,8 +94,10 @@ const createSimilarAd = () => {
   };
 };
 
-let similarAds = [];
+const similarAds = [];
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < ADS_COUNT; i++) {
   similarAds.push(createSimilarAd());
 }
+
+console.log(similarAds);
