@@ -99,5 +99,3 @@ const similarAds = [];
 for (let i = 0; i < ADS_COUNT; i++) {
   similarAds.push(createSimilarAd());
 }
-
-console.log(similarAds);
