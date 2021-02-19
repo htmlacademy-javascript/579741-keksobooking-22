@@ -1,6 +1,8 @@
 import {
   getRandomNumber,
-  getRandomFloatNumber
+  getRandomFloatNumber,
+  getRandomArrayElement,
+  createRandomArrayFromArray
 } from './util.js';
 
 const TYPES = ['palace', 'flat', 'house', 'bungalow'];
@@ -27,17 +29,7 @@ const MAX_ROOMS = 100;
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 100;
 
-const getRandomArrayElement = (array) => {
-  return array[getRandomNumber(0, array.length - 1)];
-}
 
-const createRandomArrayFromArray = (array) => {
-  const result = [];
-  for (let i = 0; i < getRandomNumber(1, array.length); i++) {
-    result.push(array[i]);
-  }
-  return result;
-}
 
 const createSimilarAd = () => {
 

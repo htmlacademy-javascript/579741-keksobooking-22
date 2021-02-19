@@ -27,7 +27,21 @@ const getRandomFloatNumber = (min, max, digits) => {
   return +((Math.random() * (max - min) + min).toFixed(digits));
 }
 
+const getRandomArrayElement = (array) => {
+  return array[getRandomNumber(0, array.length - 1)];
+}
+
+const createRandomArrayFromArray = (array) => {
+  const result = [];
+  for (let i = 0; i < getRandomNumber(1, array.length); i++) {
+    result.push(array[i]);
+  }
+  return result;
+}
+
 export {
   getRandomNumber,
-  getRandomFloatNumber
+  getRandomFloatNumber,
+  getRandomArrayElement,
+  createRandomArrayFromArray
 };
