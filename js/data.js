@@ -1,6 +1,8 @@
 import {
   getRandomNumber,
-  getRandomFloatNumber
+  getRandomFloatNumber,
+  getRandomArrayElement,
+  createRandomArrayFromArray
 } from './util.js';
 
 const TYPES = ['palace', 'flat', 'house', 'bungalow'];
@@ -10,16 +12,15 @@ const DESCRIPTIONS = ['Уютная комната', 'Лучший вариан�
 
 const ALL_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const ALL_PHOTOS = [
-  'http: //o0.github.io/assets/images/tokyo/hotel1.jpg',
-  'http: //o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http: //o0.github.io/assets/images/tokyo/hotel3.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 const MIN_X_COORDINATE = 35.65000;
 const MAX_X_COORDINATE = 35.70000;
 const MIN_Y_COORDINATE = 139.70000;
 const MAX_Y_COORDINATE = 139.80000;
 const DIGITS_COORDINATE = 5;
-const ADS_COUNT = 10;
 const MIN_PRICE = 1;
 const MAX_PRICE = 1000000;
 const MIN_ROOMS = 1;
@@ -27,17 +28,7 @@ const MAX_ROOMS = 100;
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 100;
 
-const getRandomArrayElement = (array) => {
-  return array[getRandomNumber(0, array.length - 1)];
-}
 
-const createRandomArrayFromArray = (array) => {
-  const result = [];
-  for (let i = 0; i < getRandomNumber(1, array.length); i++) {
-    result.push(array[i]);
-  }
-  return result;
-}
 
 const createSimilarAd = () => {
 
@@ -70,12 +61,8 @@ const createSimilarAd = () => {
   };
 };
 
-const similarAds = [];
 
-for (let i = 0; i < ADS_COUNT; i++) {
-  similarAds.push(createSimilarAd());
-}
 
 export {
-  similarAds
+  createSimilarAd
 };
