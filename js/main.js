@@ -4,6 +4,7 @@ import {
 import {
   createCard
 } from './card.js';
+import './map.js';
 
 const ADS_COUNT = 10;
 const similarAds = [];
@@ -13,7 +14,11 @@ for (let i = 0; i < ADS_COUNT; i++) {
 }
 
 
-const card = createCard(similarAds[1]);
+// const card = createCard(similarAds[1]);
 
-const mapCanvas = document.querySelector('#map-canvas');
-mapCanvas.appendChild(card);
+// const mapCanvas = document.querySelector('#map-canvas');
+// mapCanvas.appendChild(card);
+
+export {
+  similarAds
+};
