@@ -1,3 +1,5 @@
+import './data.js';
+
 const card = document.querySelector('#card');
 
 const mapTypeToHeader = {
