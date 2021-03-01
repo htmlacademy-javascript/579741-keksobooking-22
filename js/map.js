@@ -1,40 +1,39 @@
 /* global L:readonly */
 
 import {
-  similarAds
+  createAds
 } from './data.js';
 import {
   createCard
 } from './card.js';
+import {
+  setAddressValue
+} from './form.js';
+import {
+  disableFormElements
+} from './util.js';
+import {
+  activateForm
+} from './form.js';
+import {
+  enableFormElements
+} from './util.js';
 
+const ADS_COUNT = 10;
 const LAT_TOKYO = 35.68950;
 const LNG_TOKYO = 139.69171;
-const coordinateAdress = document.getElementById('address');
 
-const adForm = document.querySelector('.ad-form');
-adForm.classList.add('ad-form--disabled');
-const adFormFieldsetArray = adForm.children;
-for (let i = 0; i < adFormFieldsetArray.length; i++) {
-  adFormFieldsetArray[i].setAttribute('disabled', 'disabled');
-}
 
 const mapFilters = document.querySelector('.map__filters');
-mapFilters.classList.add('ad-form--disabled');
 const mapFiltersFieldsetArray = mapFilters.children;
-for (let i = 0; i < mapFiltersFieldsetArray.length; i++) {
-  mapFiltersFieldsetArray[i].setAttribute('disabled', 'disabled');
-}
+
+disableFormElements(mapFiltersFieldsetArray);
+
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    adForm.classList.remove('ad-form--disabled');
-    for (let i = 0; i < adFormFieldsetArray.length; i++) {
-      adFormFieldsetArray[i].removeAttribute('disabled', 'disabled');
-    }
-    mapFilters.classList.remove('ad-form--disabled');
-    for (let i = 0; i < mapFiltersFieldsetArray.length; i++) {
-      mapFiltersFieldsetArray[i].removeAttribute('disabled', 'disabled');
-    }
+    activateForm();
+    enableFormElements(mapFiltersFieldsetArray);
   })
   .setView({
     lat: LAT_TOKYO,
@@ -69,14 +68,14 @@ mainPinMarker.on('moveend', (evt) => {
     lng,
   } = evt.target.getLatLng();
 
-  coordinateAdress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-
+  setAddressValue(lat.toFixed(5),lng.toFixed(5));
 });
 
 
-coordinateAdress.value = [LAT_TOKYO, LNG_TOKYO];
-coordinateAdress.setAttribute('disabled', 'disabled');
+setAddressValue(LAT_TOKYO, LNG_TOKYO);
 
+
+const similarAds = createAds(ADS_COUNT);
 similarAds.forEach((similarAd) => {
   const pinIcon = L.icon({
     iconUrl: './img/pin.svg',
@@ -97,3 +96,4 @@ similarAds.forEach((similarAd) => {
       createCard(similarAd),
     );
 });
+

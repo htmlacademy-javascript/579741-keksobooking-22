@@ -39,9 +39,23 @@ const createRandomArrayFromArray = (array) => {
   return result;
 }
 
+const enableFormElements = (elements) =>{
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].removeAttribute('disabled', 'disabled');
+  }
+}
+
+const disableFormElements = (elements) =>{
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].setAttribute('disabled', 'disabled');
+  }
+}
+
 export {
   getRandomNumber,
   getRandomFloatNumber,
   getRandomArrayElement,
-  createRandomArrayFromArray
+  createRandomArrayFromArray,
+  disableFormElements,
+  enableFormElements
 };
