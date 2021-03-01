@@ -61,8 +61,15 @@ const createSimilarAd = () => {
   };
 };
 
+const ADS_COUNT = 10;
+const similarAds = [];
+
+for (let i = 0; i < ADS_COUNT; i++) {
+  similarAds.push(createSimilarAd());
+}
+
 
 
 export {
-  createSimilarAd
+  similarAds
 };
