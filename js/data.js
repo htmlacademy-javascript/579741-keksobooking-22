@@ -29,7 +29,6 @@ const MIN_GUESTS = 1;
 const MAX_GUESTS = 100;
 
 
-
 const createSimilarAd = () => {
 
   const features = createRandomArrayFromArray(ALL_FEATURES);
@@ -61,15 +60,16 @@ const createSimilarAd = () => {
   };
 };
 
-const ADS_COUNT = 10;
-const similarAds = [];
 
-for (let i = 0; i < ADS_COUNT; i++) {
-  similarAds.push(createSimilarAd());
+const createAds = (count) =>{
+  const similarAds = [];
+  for (let i = 0; i < count; i++) {
+    similarAds.push(createSimilarAd());
+  }
+  return similarAds;
 }
 
 
-
 export {
-  similarAds
+  createAds
 };
