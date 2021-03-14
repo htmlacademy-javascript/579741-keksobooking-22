@@ -8,7 +8,7 @@ import {
 } from './map.js';
 import {
   createMessage
-} from './main.js';
+} from './message.js';
 
 const coordinateAdress = document.querySelector('#address');
 const adForm = document.querySelector('.ad-form');

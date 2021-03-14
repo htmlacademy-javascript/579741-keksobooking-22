@@ -5,9 +5,7 @@ import { setAddressValue } from './form.js';
 import { disableFormElements } from './util.js';
 import { activateForm } from './form.js';
 import { enableFormElements } from './util.js';
-import { createMessage } from './main.js';
-
-
+import { createMessage } from './message.js';
 
 const LAT_TOKYO = 35.6895;
 const LNG_TOKYO = 139.69171;
@@ -35,12 +33,18 @@ const map = L.map('map-canvas')
               lat: similarAd.location.lat,
               lng: similarAd.location.lng,
             },
-            {icon: pinIcon});
+            { icon: pinIcon },
+          );
 
           marker.addTo(map).bindPopup(createCard(similarAd));
         });
       })
-      .catch(() => createMessage('error','Произошла ошибка запроса при загрузке данных с сервера'));
+      .catch(() =>
+        createMessage(
+          'error',
+          'Произошла ошибка запроса при загрузке данных с сервера',
+        ),
+      );
 
     enableFormElements(mapFiltersFieldsetArray);
   })
@@ -48,7 +52,9 @@ const map = L.map('map-canvas')
     {
       lat: LAT_TOKYO,
       lng: LNG_TOKYO,
-    },12);
+    },
+    12,
+  );
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution:
@@ -68,7 +74,9 @@ const mainPinMarker = L.marker(
   },
   {
     draggable: true,
-    icon: mainPinIcon});
+    icon: mainPinIcon,
+  },
+);
 
 mainPinMarker.addTo(map);
 
@@ -80,8 +88,4 @@ mainPinMarker.on('moveend', (evt) => {
 
 setAddressValue(LAT_TOKYO, LNG_TOKYO);
 
-
-export {
-  LAT_TOKYO,
-  LNG_TOKYO
-};
+export { LAT_TOKYO, LNG_TOKYO };
