@@ -6,45 +6,62 @@ import { disableFormElements } from './util.js';
 import { activateForm } from './form.js';
 import { enableFormElements } from './util.js';
 import { createMessage } from './message.js';
+import { getData } from './api.js';
 
 const LAT_TOKYO = 35.6895;
 const LNG_TOKYO = 139.69171;
+const GET_DATA_URL = 'https://22.javascript.pages.academy/keksobooking/data';
+const QUANTITY_ADS = 10;
 
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersFieldsetArray = mapFilters.children;
 
+
+const markersDb = []
+
+const drawPin = (ads) => {
+  ads.forEach((similarAd) => {
+    const pinIcon = L.icon({
+      iconUrl: './img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+
+    const marker = L.marker(
+      {
+        lat: similarAd.location.lat,
+        lng: similarAd.location.lng,
+      },
+      { icon: pinIcon },
+    );
+    markersDb.push(marker)
+    marker.addTo(map).bindPopup(createCard(similarAd));
+  });
+}
+
+
 disableFormElements(mapFiltersFieldsetArray);
+
+let data = null ;
+
+const getDataSuccess = (ads) => {
+  data = ads;
+  data.length = QUANTITY_ADS;
+  drawPin(ads);
+};
+const getDataError = () => {
+  createMessage(
+    'error',
+    'Произошла ошибка запроса при загрузке данных с сервера',
+  )
+};
+
 
 const map = L.map('map-canvas')
   .on('load', () => {
     activateForm();
-    fetch('https://22.javascript.pages.academy/keksobooking/data')
-      .then((response) => response.json())
-      .then((ads) => {
-        ads.forEach((similarAd) => {
-          const pinIcon = L.icon({
-            iconUrl: './img/pin.svg',
-            iconSize: [40, 40],
-            iconAnchor: [20, 40],
-          });
+    getData(GET_DATA_URL,getDataSuccess,getDataError);
 
-          const marker = L.marker(
-            {
-              lat: similarAd.location.lat,
-              lng: similarAd.location.lng,
-            },
-            { icon: pinIcon },
-          );
-
-          marker.addTo(map).bindPopup(createCard(similarAd));
-        });
-      })
-      .catch(() =>
-        createMessage(
-          'error',
-          'Произошла ошибка запроса при загрузке данных с сервера',
-        ),
-      );
 
     enableFormElements(mapFiltersFieldsetArray);
   })
@@ -53,7 +70,7 @@ const map = L.map('map-canvas')
       lat: LAT_TOKYO,
       lng: LNG_TOKYO,
     },
-    12,
+    9,
   );
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -88,4 +105,11 @@ mainPinMarker.on('moveend', (evt) => {
 
 setAddressValue(LAT_TOKYO, LNG_TOKYO);
 
-export { LAT_TOKYO, LNG_TOKYO };
+export {
+  LAT_TOKYO,
+  LNG_TOKYO,
+  mapFilters,
+  data,
+  markersDb,
+  drawPin
+};

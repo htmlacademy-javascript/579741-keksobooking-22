@@ -1,4 +1,4 @@
-import './data.js';
+// import './data.js';
 
 const card = document.querySelector('#card');
 
